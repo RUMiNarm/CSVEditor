@@ -37,8 +37,15 @@ class CSVEditorApp:
         
         file_path = self.csv_files[file_key]
         try:
+            headers = {
+            "hu.csv": ["アガり方", "鳴き/メンゼン", "ピンフ", "符数"],
+            "tensuu.csv": ["翻数", "符数", "親/子", "アガり方","点数"],
+            "teyaku.csv": ["翻数", "役名"]
+        }
             self.df = pd.read_csv(file_path, header=None)
-            self.create_edit_screen()
+            if file_key in headers:
+                self.df.columns = headers[file_key]
+                self.create_edit_screen()
         except Exception as e:
             messagebox.showerror("エラー", f"CSVの読み込みに失敗しました: {e}")
     
